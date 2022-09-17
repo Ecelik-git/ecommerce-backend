@@ -25,6 +25,15 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	public User registerNewuser(User user) {
+
+		Role role = roleDao.findById("User").get();
+
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		user.setUserRole(roles);
+
+		user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+
 		return userDao.save(user);
 	}
 
